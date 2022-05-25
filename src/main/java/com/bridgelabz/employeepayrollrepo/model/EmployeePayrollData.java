@@ -31,14 +31,17 @@ public @Data @NoArgsConstructor class EmployeePayrollData {
     private List<String> department;
 
     public EmployeePayrollData( EmployeePayrollDTO employeePayrollDTO) {
-        this.employeeId= employeeId;
-        this.name = employeePayrollDTO.name;
-        this.salary = employeePayrollDTO.salary;
-        this.gender = employeePayrollDTO.gender;
-        this.startDate = employeePayrollDTO.startDate;
-        this.note=employeePayrollDTO.note;
-        this.profilePic=employeePayrollDTO.profilePic;
-        this.department=employeePayrollDTO.department;
+        this.updateEmployeePayrollData(employeePayrollDTO);
 
+    }
+
+    public void updateEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
+        this.name = empPayrollDTO.name;
+        this.salary = empPayrollDTO.salary;
+        this.gender= empPayrollDTO.gender;
+        this.startDate= empPayrollDTO.startDate;
+        this.note= empPayrollDTO.note;
+        this.profilePic= empPayrollDTO.profilePic;
+        this.department = empPayrollDTO.department;
     }
 }
