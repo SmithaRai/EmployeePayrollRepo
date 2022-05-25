@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication
 @Slf4j
 public class EmployeePayrollRepoApplication {
 
@@ -16,5 +16,7 @@ public class EmployeePayrollRepoApplication {
         ApplicationContext context = SpringApplication.run(EmployeePayrollRepoApplication.class, args);
 
         log.info("Employee Payroll App Started in {} Environment", context.getEnvironment().getProperty("environment"));
+        log.info("Employee Payroll DB User is {} ",
+                context.getEnvironment().getProperty("spring.datasource.username"));
     }
 }

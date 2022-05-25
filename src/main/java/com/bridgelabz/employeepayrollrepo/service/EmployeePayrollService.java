@@ -1,36 +1,45 @@
 package com.bridgelabz.employeepayrollrepo.service;
 
-
+import com.bridgelabz.employeepayrollrepo.repository.EmployeePayrollRepository;
 import com.bridgelabz.employeepayrollrepo.DTO.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollrepo.exceptions.EmployeePayrollException;
 import com.bridgelabz.employeepayrollrepo.model.EmployeePayrollData;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class EmployeePayrollService implements IEmployeePayrollService{
-    private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 
+    @Autowired
+    EmployeePayrollRepository employeePayrollRepository;
+    private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+    @Override
     public List<EmployeePayrollData> getEmployeePayrollData(){
         return employeePayrollList;
     }
-
+    @Override
     public EmployeePayrollData getEmployeePayrollDataById(int empId){
         return employeePayrollList.stream()
                   .filter(empData->empData.getEmployeeId() == empId)
                   .findFirst()
                   .orElseThrow(()->new EmployeePayrollException("Employee Not Found "));
     }
-
+    @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO){
         EmployeePayrollData empData = null;
-        empData = new EmployeePayrollData(employeePayrollList.size()+1,empPayrollDTO);
+        empData = new EmployeePayrollData(empPayrollDTO);
+        log.debug("Emp Data: "+empData.toString());
         employeePayrollList.add(empData);
-        return empData;
-    }
+        return employeePayrollRepository.save(empData);
 
+    }
+    @Override
     public EmployeePayrollData updateEmployeePayrollData(int empId,EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
         empData.setName(empPayrollDTO.name);

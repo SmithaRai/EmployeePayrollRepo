@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class EmployeePayrollExceptionalHandler {
 
 private static final String message = "Exception while processing REST Request";
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+   @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
         log.error("Invalid Date Format",exception);
-        ResponseDTO responseDTO = new ResponseDTO(message,"Should have date in the Format dd MMM yyyy");
+        ResponseDTO responseDTO = new ResponseDTO(message,"Should have date in the Format dd MM yyyy");
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 
